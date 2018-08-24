@@ -1,0 +1,9 @@
+---
+
+default: -p pretty -p homolog -p html -p chrome_headless
+
+pretty: --format pretty
+homolog: AMBIENTE=homolog
+html: --format html --out=reports/relatorio.html
+chrome: BROWSER=chrome
+chrome_headless: BROWSER=chrome_headless
