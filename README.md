@@ -1,16 +1,26 @@
-# Automatizando end-to-end com Docker
+# Automação end-to-end com Docker
 
-1- Criar pasta e criar estrutura do projeto
+``
+Requisito inicial:
+``
 
-```
+````
+ruby 2.5.0 > superior
+
 Instalar:
   gem install cucumber
   gem install rspec
-Executar:
+````
+
+1. Criar pasta local e criar estrutura do projeto
+
+```
+Acessar pasta criada e executar no terminal:
+
   cucumber --init
 ```
 
-2 - Na pasta raiz criar o arquivo Gemfile
+2. Na pasta raiz criar arquivo *Gemfile* com as seguinte gems:
 
 ```ruby
 source 'http://rubygems.org'
@@ -24,7 +34,7 @@ gem 'selenium-webdriver'
 gem 'site_prism', '2.13'
 ```
 
-3 - Adicionar os requires no arquivo env.rb e configurar o Capybara
+3. Adicionar os requires no arquivo *env.rb* e configurar o Capybara
 
 ```ruby
 require 'capybara/cucumber'
@@ -38,11 +48,11 @@ Capybara.configure do |config|
 end
 ```
 
-4 - Criar duas pastas dentro de features specs (executar as features) e pages (po)
+4. Criar duas pastas dentro de features **specs** (executar as features) e **pages** (po)
 
-5 - Na pasta raiz criar a pasta reports
+5. Na pasta raiz criar a pasta **reports**
 
-6 - Criar arquivo hooks.rb dentro de support para configurar o screenshot ao final de cada cenário
+6. Criar arquivo *hooks.rb* dentro de support para configurar o screenshot ao final de cada cenário
 
 ```ruby
 After do |scenario|
@@ -55,7 +65,7 @@ After do |scenario|
 end
 ```
 
-7 - Criar arquivo helper.rb dentro de support
+7. Criar arquivo *helper.rb* dentro de support
 
 ````ruby
 module Helper
@@ -68,7 +78,7 @@ module Helper
 end
 ````
 
-8 - No env.rb adicionar require dos helper criado e inclui-lo como global
+8. No *env.rb* adicionar require do helper criado e inclui-lo como global
 
 ````ruby
 require 'capybara/cucumber'
@@ -85,7 +95,7 @@ Capybara.configure do |config|
 end
 ````
 
-10 - Configurar o cucumber, criar arquivo cucumber.yml na pasta raiz
+9. Configurar o cucumber, criar arquivo *cucumber.yml* na pasta raiz
 
 ````yml
 ---
@@ -96,13 +106,13 @@ pretty: --format pretty
 homolog: AMBIENTE=homolog
 ````
 
-11 - Dentro de support criar pasta ambientes e criar arquivo homolog.yml passando a url do ambiente
+10. Dentro de support criar pasta **ambientes** e criar arquivo *homolog.yml* passando a url do ambiente
 
 ````yml
 url_padrao: 'https://automacaocombatista.herokuapp.com'
 ````
 
-12 - Configurar o ambiente dentro do arquivo env.rb para que ele possa buscar a url dentro da pasta ambientes
+11. Configurar o ambiente dentro do arquivo *env.rb* para que ele possa buscar a url dentro da pasta ambientes
 
 ````ruby
 require 'capybara/cucumber'
@@ -122,7 +132,7 @@ Capybara.configure do |config|
 end
 ````
 
-13 - Ainda no env.rb alterar a url padrão do capybara para chamar pela constante CONFIG criada
+12. Ainda no *env.rb* alterar a url padrão do capybara para chamar pela constante CONFIG criada
 
 ````ruby
 require 'capybara/cucumber'
@@ -142,7 +152,7 @@ Capybara.configure do |config|
 end
 ````
 
-14 - Criar cenario criar_usuario.feature dentro de specs
+13. Criar cenario *criar_usuario.feature* dentro de specs em seguida rodar comando *cucumber* no terminal
 
 ````ruby
 #language: pt
@@ -158,7 +168,7 @@ Quando eu cadastro meu usuario
 Entao verifico se o usuario foi cadastrado
 ````
 
-15 - Criar arquivo criar_usuario.rb em step-definitions com os steps gerados no terminal
+14. Criar arquivo *criar_usuario.rb* em step-definitions com os steps gerados no terminal
 
 ````ruby
 Quando("eu cadastro meu usuario") do
@@ -170,7 +180,7 @@ Entao("verifico se o usuario foi cadastrado") do
 end
 ````
 
-16 - Criar nosso Pageobject para mapear os elementos em pages/criar_usuario_page.rb
+15. Criar nosso Pageobject para mapear os elementos em *pages/criar_usuario_page.rb*
 
 ````ruby
 class User < SitePrism::Page
@@ -200,7 +210,7 @@ class User < SitePrism::Page
 end
 ````
 
-17 - Criar um arquivo em support chamado page_helper.rb
+16. Criar um arquivo em support chamado *page_helper.rb* 
 
 ````ruby
 Dir[File.join(File.dirname(__FILE__), "../pages/*_page.rb")].each { |file| require file }
@@ -212,7 +222,7 @@ module Pages
 end
 ````
 
-18 - Incluir o modulo Pages criado como global dentro de env.rb e dar um require do arquivo
+17. Incluir o modulo Pages como global dentro de *env.rb* e dar um require do arquivo criado
 
 ````ruby
 require 'capybara/cucumber'
@@ -234,7 +244,7 @@ Capybara.configure do |config|
 end
 ````
 
-18 - Acrescentar em nosso cucumber.yml relatório
+18. Acrescentar em nosso *cucumber.yml* relatório
 
 ````yml
 ---
@@ -246,7 +256,7 @@ homolog: AMBIENTE=homolog
 html: --format html --out=reports/relatorio.html
 ````
 
-19 - Arquivo criar_usuario.rb preenchido com os dados do PO
+19. Arquivo *criar_usuario.rb* preenchido com os dados do PO na pasta **step-definitions**
 
 ````ruby
 Quando("eu cadastro meu usuario") do
@@ -260,14 +270,14 @@ Entao("verifico se o usuario foi cadastrado") do
 end
 ````
 
-20 - Rodando o cenario
+20. Executando o cenário
 
-comando
+Comando:
 ``
 bundle exec cucumber -t@criar_usuario
 ``
 
-Saida terminal:
+Saída terminal:
 
 ````ruby
 ╰─➤  bundle exec cucumber -t@criar_usuario
@@ -289,7 +299,7 @@ Funcionalidade: Criar Usuario
 
 ## Rodar em modo headless do chrome
 
-1 - No arquivo cumcumber.yml incluir navegadores e chamar constante no default
+1. No arquivo *cumcumber.yml* incluir navegadores e chamar constante no default do arquivo
 
 ````yml
 ---
@@ -303,21 +313,21 @@ chrome: BROWSER=chrome
 chrome_headless: BROWSER=chrome_headless
 ````
 
-2 -  No arquivo env.rb alterar a chamada do config.default_driver:
+2.  No arquivo *env.rb* alterar a chamada do **config.default_driver**:
 Dessa forma conseguiremos sobrescrever o selenium para o que desejamos chamar no momento
 
-De 
+De:
 ````ruby
   config.default_driver = :selenium_chrome
 ````
-Para 
+Para:
 ````ruby
     config.default_driver = :selenium
 ````
 
-3 - Também no arquivo env.rb configurar a chamada tanto abrindo navegador e em modo headless
+3. Também no arquivo *env.rb* configurar a chamada para subir navegador e em modo headless
 
-Primeiro criar a constante, onde desta forma o browser será informado no arquivo cucumber;yml
+Primeiro criar a constante, desta forma o browser será informado no arquivo *cucumber.yml*
 
 ````ruby
 BROWSER = ENV['BROWSER']
@@ -332,14 +342,23 @@ Capybara.register_driver :selenium do |app|
   elsif BROWSER.eql?('chrome_headless')
     Capybara::Selenium::Driver.new(app, :browser => :chrome,
       desired_capabilities: Selenium::WebDriver::Remote::Capabilities.chrome(
-        'chromeOptions'=> { 'args' => ['--headless', 'disable-gpu'] }
+        'chromeOptions'=> { 'args' => ['--headless', 
+                                      'disable-gpu',
+                                      '--disable-dev-shm-usage',
+                                      '--no-sandbox'] }
       )  
     )
   end
 end
 ````
 
-4 - Incluir as constantes criadas no env.rb no arquivo cucumber.yml
+- disable-dev-shm-usage => Por padrão, o Docker executa um contêiner com um espaço de memória compartilhada de 64 MB. Normalmente, isso é muito pequeno para o Chrome e fará com que o Chrome trave ou não renderize páginas grandes. Para corrigir, usamos o arg *--disable-dev-shm-usage*
+
+- --no-sandbox => Desabilita versão de sandbox do Chrome 
+
+Ambas serão executadas em modo headless para garantir que no Docker funcione sem problemas.
+
+4. Incluir as constante criada no env.rb no arquivo *cucumber.yml*
 
 ````yml
 ---
@@ -359,15 +378,48 @@ Caso queira mudar um para o abrindo navegador mude para:
 default: -p pretty -p homolog -p html -p chrome
 ````
 
-## Rodando Docker
+## Executando no Docker
 
-1 - Build a imagem cirada pelo arquivo Dockerfile
+``
+Requisito:
+  Docker instalado
+``
+
+1. Criar arquivo na raiz do projeto chamado *Dockerfile*
+
+```sh
+FROM ruby:2.5.0
+RUN apt-get update && \
+    apt-get install -y net-tools
+
+# Install depends.
+RUN apt-get install -y x11vnc xvfb fluxbox wget
+# Install Chrome
+RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
+    && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list
+
+RUN apt-get update && apt-get -y install google-chrome-stable
+
+ENV APP_HOME /app
+ENV HOME /root
+RUN mkdir $APP_HOME
+WORKDIR $APP_HOME
+COPY Gemfile* $APP_HOME/
+RUN bundle install
+  
+COPY . $APP_HOME
+ENV ENVIRONMENT default
+
+CMD bundle exec cucumber features/specs
+```
+
+1. Buildar imagem criada pelo arquivo *Dockerfile*
 
 ````ruby
-╰─➤  docker build -t < nome de sua imagem > .
+╰─➤  docker build -t < nome imagem que deseja > .
 ````
 
-Execute o test diretamente pelo Docker
+2. Execute o test diretamente pelo Docker após buildar imagem
 
 ````ruby
 ╰─➤  docker run --rm < nome de sua imagem > bundle exec cucumber features/specs/criar_usuario.feature
@@ -377,6 +429,14 @@ Execute o test diretamente pelo Docker
 Atenção como não temos interface gráfica dentro do Docker rodar sempre em modo Headless seus testes.
 ```
 
-Pronto! Agora você possui um teste end-to-end automatizado completo.
+Pronto! Agora você possui um teste end-to-end automatizado completo e melhor rodando no Docker.
+
+
+Caso tenha ficado com alguma duvida no passo a passo, olhem o projeto que esta nesse mesmo repositório ou entrem em contato. 
+
 
 OBRIGADO ;)
+
+License
+-------
+[MIT License](LICENSE)
