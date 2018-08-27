@@ -380,9 +380,43 @@ default: -p pretty -p homolog -p html -p chrome
 
 ## Executando no Docker
 
+
 ``
-Requisito:
-  Docker instalado
+REQUISITO:
+  DOCKER INSTALADO
+``
+
+### Instalação Linux (Ubuntu/Debian)
+
+````
+a. sudo apt-get update
+
+b.  sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    software-properties-common
+
+c. curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+d.  Baseado na arquitetura 32/64, execute:
+
+sudo add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+
+e. sudo apt-get update
+
+f. sudo apt-get install docker-ce
+
+g. Teste
+docker --help
+
+Referência: url: https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-using-the-repository
+````
+
+``Após instalado e testado:
 ``
 
 1. Criar arquivo na raiz do projeto chamado *Dockerfile*
