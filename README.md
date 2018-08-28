@@ -1,11 +1,11 @@
 # Automação end-to-end com Docker
 
 ``
-Requisito inicial:
+Requisito mínimo:
 ``
 
 ````
-ruby 2.5.0 > superior
+ruby 2.5.0 >~ superior
 
 Instalar:
   gem install cucumber
@@ -15,10 +15,29 @@ Instalar:
 1. Criar pasta local e criar estrutura do projeto
 
 ```
-Acessar pasta criada e executar no terminal:
+Acessar pasta criada e executar o seguinte comando no terminal:
 
   cucumber --init
 ```
+
+Saída terminal:
+
+```
+╰─➤  cucumber --init
+  create   features
+  create   features/step_definitions
+  create   features/support
+  create   features/support/env.rb
+```
+
+- step_definitions - pasta onde são executados os testes
+- support - pasta disponilizada para configurações
+- env.rb - arquivo de configurações de ambiente do projeto
+
+``
+Essa é a configuração padrão ao executar o comando, na seguência do passo a passo iremos incluir mais configurações para deixar o projeto completo.
+``
+
 
 2. Na pasta raiz criar arquivo *Gemfile* com as seguinte gems:
 
@@ -48,9 +67,15 @@ Capybara.configure do |config|
 end
 ```
 
-4. Criar duas pastas dentro de features **specs** (executar as features) e **pages** (po)
+4. Criar duas pastas dentro de *features*:
+
+- **specs** (executar as features) 
+
+- **pages** (page objects)
 
 5. Na pasta raiz criar a pasta **reports**
+
+- reports - irá armazenar as evidências dos cenários executado futuramente
 
 6. Criar arquivo *hooks.rb* dentro de support para configurar o screenshot ao final de cada cenário
 
